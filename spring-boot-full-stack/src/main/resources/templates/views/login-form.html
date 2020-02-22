@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{fragments/main_layout}">
+<head>
+<title>Register Form</title>
+</head>
+<body>
+	<div layout:fragment="content" class="container mySpace">
+		<div class="alert alert-danger" th:if="${param.error}">
+			<!-- param.error is also coming from spring security -->
+			<h2>Invalid Email or Password</h2>
+		</div>
+	
+		<form th:action="@{/login}" method="post">
+			<div class="form-group">
+				<label for="email" class="form-control-label">Email</label>
+				<input type="email" class="form-control" id="email" name="username">
+				<!-- name="username" is required by spring security for authentication-->
+			</div>
+			<div class="form-group">
+				<label for="password" class="form-control-label">Password</label>
+				<input type="password" class="form-control" id="password" name="password">
+				<!-- name="password" is required by spring security for authentication-->
+			</div>
+			
+			<input type="submit" class="btn btn-primary" value="Submit" />
+		</form>
+	</div>
+</body>
+</html>

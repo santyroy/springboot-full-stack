@@ -31,13 +31,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 		.antMatchers("/", "/register","/login", "/about", "/css/**", "/webjars/**").permitAll() // "/login" is the normal get mapping page
-		.anyRequest().authenticated()
+		.antMatchers("/profile").hasAnyRole("ADMIN", "USER")
+		.antMatchers("/users", "/addTask").hasRole("ADMIN")
 		.and().formLogin().loginPage("/login").permitAll().defaultSuccessUrl("/profile") // "/login" is the form action of the custom login page
 		.and().logout().logoutSuccessUrl("/login"); // "/login" is the normal get mapping page
 	}
 	
 	@Bean
-	private PasswordEncoder passwordEncoder() {
+	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
 }
